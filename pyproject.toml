@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "daybreak-ml-docs"
+version = "0.1.0"
+description = ""
+authors = ["LAPTOP-VCGCOL4V <petercbull@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+anthropic = ">=0.20.0"
+openai = "^1.14.3"
+llama-index = "^0.10.25"
+requests = "^2.31.0"
+llama-index-llms-anthropic = "^0.1.7"
+python-dotenv = "^1.0.1"
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
