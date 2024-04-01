@@ -1,0 +1,4 @@
+FROM ./downloads/zephyr-7b-beta.Q8_0.gguf
+
+
+
