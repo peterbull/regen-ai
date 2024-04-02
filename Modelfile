@@ -1,4 +1,5 @@
-FROM ./downloads/zephyr-7b-beta.Q8_0.gguf
+FROM ./downloads/mistral-7b-instruct-v0.2.Q8_0.gguf
+
 
 
 

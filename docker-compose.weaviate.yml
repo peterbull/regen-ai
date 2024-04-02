@@ -1,0 +1,19 @@
+version: "3.4"
+services:
+  weaviate:
+    image: cr.weaviate.io/semitechnologies/weaviate:1.24.6
+    restart: on-failure:0
+    ports:
+      - 8080:8080
+      - 50051:50051
+    environment:
+      QUERY_DEFAULTS_LIMIT: 20
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "true"
+      PERSISTENCE_DATA_PATH: "./data"
+      ENABLE_MODULES: "text2vec-cohere,text2vec-huggingface,text2vec-palm,text2vec-openai,generative-openai,generative-cohere,generative-palm,ref2vec-centroid,reranker-cohere,qna-openai"
+      DEFAULT_VECTORIZER_MODULE: text2vec-huggingface
+      HUGGINGFACE_APIKEY: ${HUGGINGFACE_APIKEY:-}
+      CLUSTER_HOSTNAME: "node1"
+
+volumes:
+  weaviate_data:
