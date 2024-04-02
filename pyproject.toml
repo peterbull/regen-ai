@@ -34,6 +34,9 @@ bitsandbytes = "^0.43.0"
 peft = "^0.10.0"
 huggingface-hub = "^0.22.2"
 weaviate-client = "^4.5.4"
+psycopg2 = "^2.9.9"
+pgvector = "^0.2.5"
+tiktoken = "^0.6.0"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.4"
