@@ -1,0 +1,96 @@
+{
+  "question_to_blog_outline": {
+    "lm": null,
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "question": "Can you make class based signatures?",
+        "context": "` and additional config options. If the `signature` is a string, it processes the input and output fields, generates instructions, and creates a template for the specified `signature` type.\n\n```python\nclass Predict(Parameter):\n    def __init__(self, signature, **config):\n        self.stage = random.randbytes(8).hex()\n        self.signature for reasoning. Two distinct signature templates are created internally depending on the presence of the hint.\n\n```python\nclass ChainOfThoughtWithHint(Predict):\n    def __init__(self, signature, rationale_type=None, activated=True, **config):\n        super().__init__(signature, **config)\n\n        self.activated = activated\n\n     signature when chain of thought reasoning is activated or if the language model is a GPT3 model.\n\n**Parameters:**\n- `**kwargs`: Keyword arguments required for prediction.\n\n**Returns:**\n- The result of the `forward` method.\n\n### Examples\n\n```python\n#Define a simple signature for basic question answering\nclass BasicQA(dspy.Signature):\n    \"\"\"Answer questions with short]})\n        \n        self.extended_signature = dsp.Template(signature.instructions, **extended_kwargs)\n```\n\n**Parameters:**\n- `signature` (_Any_): Signature of predictive model.\n- `rationale_type` (_dsp.Type_, _optional_): Rationale type for reasoning steps. Defaults to ` self.activated = activated\n\n        signature = self.signature\n        *keys, last_key = signature.kwargs.keys()\n\n        DEFAULT_HINT_TYPE = dsp.Type(prefix=\"Hint:\", desc=\"${hint}\")\n\n        DEFAULT_RATIONALE_TYPE = dsp.Type(prefix=\"Reason",
+        "rationale": "create a class based signature for chain of thought reasoning with hint. First, we inherit from the Predict class and define our constructor. In this constructor, we set the stage variable which is used to generate unique signatures for each prediction request. We also create two distinct signature templates internally depending on the presence of the hint. The first template is used when chain of thought reasoning is activated or if the language model is a GPT3 model. The second template is used when the hint is not present. Both templates include instructions for generating the response and creating a template for the specified signature type. We also define an activated parameter which is used to determine whether chain of thought reasoning should be activated or not. This parameter can be set to True or False depending on the use case. Next, we override the forward method to return the result of our custom prediction logic. In this example, we check if the hint is present and activate chain of thought reasoning if it is. We also pass any required keyword arguments to the superclass constructor for prediction. Finally, we define two examples of how to use our new signature class. The first example defines a simple signature for basic question answering, while the second example demonstrates how to use our ChainOfThoughtWithHint class with hints and chain of thought reasoning activated.",
+        "blog_outline": "- Introduction\n- Explanation of chain of thought reasoning and hints\n- Definition of the ChainOfThoughtWithHint class\n- Overview of the constructor and signature templates\n- Explanation of the activated parameter\n- Overview of the forward method and prediction logic\n- Examples of using the new signature class\n- Conclusion"
+      },
+      {
+        "question": "How do you create typed predictors?"
+      },
+      {
+        "question": "How do you set up an LM client?"
+      }
+    ],
+    "signature_instructions": "\n    Your task is to write a blog post that will help answer the given question. \n    Please use the contexts to evaluate the structure of the blog post.\n    ",
+    "signature_prefix": "Blog Outline:",
+    "extended_signature_instructions": "\n    Your task is to write a blog post that will help answer the given question. \n    Please use the contexts to evaluate the structure of the blog post.\n    ",
+    "extended_signature_prefix": "Blog Outline:"
+  },
+  "topic_to_paragraph": {
+    "lm": null,
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "topic": "- Introduction",
+        "context": "` and additional config options. If the `signature` is a string, it processes the input and output fields, generates instructions, and creates a template for the specified `signature` type.\n\n```python\nclass Predict(Parameter):\n    def __init__(self, signature, **config):\n        self.stage = random.randbytes(8).hex()\n        self.signature for reasoning. Two distinct signature templates are created internally depending on the presence of the hint.\n\n```python\nclass ChainOfThoughtWithHint(Predict):\n    def __init__(self, signature, rationale_type=None, activated=True, **config):\n        super().__init__(signature, **config)\n\n        self.activated = activated\n\n     signature when chain of thought reasoning is activated or if the language model is a GPT3 model.\n\n**Parameters:**\n- `**kwargs`: Keyword arguments required for prediction.\n\n**Returns:**\n- The result of the `forward` method.\n\n### Examples\n\n```python\n#Define a simple signature for basic question answering\nclass BasicQA(dspy.Signature):\n    \"\"\"Answer questions with short]})\n        \n        self.extended_signature = dsp.Template(signature.instructions, **extended_kwargs)\n```\n\n**Parameters:**\n- `signature` (_Any_): Signature of predictive model.\n- `rationale_type` (_dsp.Type_, _optional_): Rationale type for reasoning steps. Defaults to ` self.activated = activated\n\n        signature = self.signature\n        *keys, last_key = signature.kwargs.keys()\n\n        DEFAULT_HINT_TYPE = dsp.Type(prefix=\"Hint:\", desc=\"${hint}\")\n\n        DEFAULT_RATIONALE_TYPE = dsp.Type(prefix=\"Reason",
+        "rationale": "introduce a new signature for the predictive model. First, we define a simple signature for basic question answering using the `Signature` class from the `dspy` library. This signature generates instructions based on the input and output fields of the model. We then create an extended signature by passing additional config options to the `Template` constructor. The `extended_signature` is used when chain of thought reasoning is activated or if the language model is a GPT3 model. In this case, we pass the `activated` flag and the `rationale_type` as parameters to the `ChainOfThoughtWithHint` class. This allows us to specify whether chain of thought reasoning should be activated and which type of rationale should be used for the reasoning steps. The `signature` parameter is passed directly to the `ChainOfThoughtWithHint` constructor, while the `last_key` and `keys` are extracted from the signature's keyword arguments. We also define default hint and rationale types using the `DEFAULT_HINT_TYPE` and `DEFAULT_RATIONALE_TYPE` constants. These types can be customized by passing different prefixes and descriptions to their constructors.",
+        "paragraph": "The `ChainOfThoughtWithHint` class in our predictive model allows us to introduce a new signature for chain of thought reasoning or GPT3 models. By passing the `activated` flag and the `rationale_type` as parameters, we can specify whether chain of thought reasoning should be activated and which type of rationale should be used for the reasoning steps. The `signature` parameter is passed directly to the constructor, while the `last_key` and `keys` are extracted from the signature's keyword arguments. Default hint and rationale types can also be customized using the `DEFAULT_HINT_TYPE` and `DEFAULT_RATIONALE_TYPE` constants. This flexibility allows us to adapt our model to different use cases and improve its performance in specific tasks."
+      },
+      {
+        "question": "How do you create typed predictors?"
+      },
+      {
+        "question": "How do you set up an LM client?"
+      }
+    ],
+    "signature_instructions": "\n    Your task it to write a paragraph that explains a topic based on the retrieved contexts.\n    ",
+    "signature_prefix": "Paragraph:",
+    "extended_signature_instructions": "\n    Your task it to write a paragraph that explains a topic based on the retrieved contexts.\n    ",
+    "extended_signature_prefix": "Paragraph:"
+  },
+  "proof_reader": {
+    "lm": null,
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "blog_post": "The `ChainOfThoughtWithHint` class in our predictive model allows us to introduce a new signature for chain of thought reasoning or GPT3 models. By passing the `activated` flag and the `rationale_type` as parameters, we can specify whether chain of thought reasoning should be activated and which type of rationale should be used for the reasoning steps. The `signature` parameter is passed directly to the constructor, while the `last_key` and `keys` are extracted from the signature's keyword arguments. Default hint and rationale types can also be customized using the `DEFAULT_HINT_TYPE` and `DEFAULT_RATIONALE_TYPE` constants. This flexibility allows us to adapt our model to different use cases and improve its performance in specific tasks.\n \nThe `ChainOfThoughtWithHint` class in DSPy provides a way to incorporate chain of thought reasoning and hints into predictive models. It inherits from the `Predict` class and takes additional parameters such as `signature`, `rationale_type`, `activated`, and `config`. The `activated` parameter determines whether chain of thought reasoning should be activated, while the `rationale_type` parameter specifies the type of rationale for the reasoning steps. If this parameter is not provided, it defaults to the `DEFAULT_RATIONALE_TYPE`. This class allows for more detailed and nuanced predictions by incorporating hints and reasoning steps into the model's output.\n \nThe ChainOfThoughtWithHint class is a subclass of Predict that adds additional parameters for rationale_type and activated. It creates two distinct signature templates internally depending on the presence of hint and rationale_type. If hint is present, it sets self.extended_signature to a new Template object created from the instructions and extended_kwargs passed in the constructor. Otherwise, it sets it to the original signature. The ChainOfThoughtWithHint class is used for chain of thought reasoning when the model is activated or if it's a GPT3 model. It takes keyword arguments required for prediction as parameters and returns the result of the forward method.\n \nThe `Predict` class in our context is a subclass of `Parameter`, which is used to pass parameters to a model during training or prediction. Its constructor takes two arguments - `signature` and `**config`. The `signature` argument specifies the input and output fields required for prediction, and it can be either a string or an instance of `Signature`. If it's a string, the constructor processes the input and output fields, generates instructions, and creates a template for the specified signature type.\n \nThe activated parameter in the ChainOfThoughtWithHint signature is a boolean value that determines whether chain of thought reasoning should be applied during prediction. By default, this parameter is only set to True for GPT3 models or when a hint is present in the input data. However, by explicitly setting activated to True, we can force chain of thought reasoning to be applied regardless of these conditions. This provides greater flexibility and customization in our predictive models, allowing us to apply more complex reasoning steps as needed for specific tasks.\n \nDSPy's signature-based predictive models with chain of thought reasoning activated or if the language model is a GPT3 model offer a flexible and customizable framework for NLP applications. The `Predict` class creates two distinct signature templates internally depending on the presence of the hint, with additional config options for extended signatures. During prediction, keyword arguments are passed to the `forward` method, which returns the result of the forward pass through the predictive model. This implementation provides a powerful and versatile toolset for chain of thought reasoning in NLP applications using DSPy.\n \nIn order to implement chain of thought reasoning with hint using the new signature class in dspy library, we first import the necessary modules and classes. Then, we define a subclass `ChainOfThoughtWithHint` of the `Predict` class, which takes additional parameters such as `rationale_type`, `activated`, and `hint`. In the constructor, we set the stage and create two distinct signature templates based on the presence of the hint. We also define a new signature template with extended instructions and additional config options for chain of thought reasoning. Finally, we return the result of the `forward` method, which is the output of the predictive model. This allows us to easily incorporate chain of thought reasoning with hint into our models using dspy library.\n \nIn summary, a signature is a set of instructions that a predictive model follows in order to make a prediction. Depending on the presence of a hint, we use either the BasicQA or ChainOfThoughtWithHint signature for prediction. Keyword arguments required for prediction are passed in as arguments to the signature, and additional config options can be added if necessary. The forward method is then called to make the prediction.\n \n",
+        "rationale": "understand how chain of thought reasoning with hint works using DSPy library. Firstly, we import the required modules and classes from DSPy library. Then, we define a subclass `ChainOfThoughtWithHint` of the `Predict` class, which takes additional parameters such as `rationale_type`, `activated`, and `hint`. In the constructor, we set the stage and create two distinct signature templates based on the presence of the hint. We also define a new signature template with extended instructions and additional config options for chain of thought reasoning. Finally, we return the result of the `forward` method, which is the output of the predictive model.\nDuring prediction, keyword arguments required for prediction are passed in as arguments to the signature, and additional config options can be added if necessary. The forward method is then called to make the prediction. If the hint is present, we use the ChainOfThoughtWithHint signature with extended instructions and additional config options for chain of thought reasoning. Otherwise, we use the BasicQA signature for prediction.\nIn summary, by implementing chain of thought reasoning with hint using DSPy library, we can provide more complex reasoning steps for specific tasks in NLP applications, which can lead to more accurate and insightful predictions.",
+        "proofread_blog_post": ""
+      },
+      {
+        "question": "How do you set up an LM client?"
+      },
+      {
+        "question": "How do you create typed predictors?"
+      }
+    ],
+    "signature_instructions": "\n    Proofread a blog post and output a more well written version of the original post.\n    ",
+    "signature_prefix": "Proofread Blog Post:",
+    "extended_signature_instructions": "\n    Proofread a blog post and output a more well written version of the original post.\n    ",
+    "extended_signature_prefix": "Proofread Blog Post:"
+  },
+  "title_generator": {
+    "lm": null,
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "blog_outline": "- Introduction\n- Explanation of chain of thought reasoning and hints\n- Definition of the ChainOfThoughtWithHint class\n- Overview of the constructor and signature templates\n- Explanation of the activated parameter\n- Overview of the forward method and prediction logic\n- Examples of using the new signature class\n- Conclusion",
+        "rationale": "write a compelling title for this blog post. First, we want to convey that the post will cover an introduction, followed by an explanation of chain of thought reasoning and hints. We also want to highlight the fact that we'll be defining a new class called ChainOfThoughtWithHint. Next, we'll provide an overview of the constructor and signature templates, as well as explaining the activated parameter. Finally, we'll cover the forward method and prediction logic, with examples of using the new signature class. Putting it all together, our title could be \"Mastering Chain of Thought Reasoning with the New ChainOfThoughtWithHint Class\".",
+        "title": "Mastering Chain of Thought Reasoning with the New ChainOfThoughtWithHint Class"
+      },
+      {
+        "question": "How do you create typed predictors?"
+      },
+      {
+        "question": "How do you set up an LM client?"
+      }
+    ],
+    "signature_instructions": "\n    Write a title for a blog post given a description of the topics the blog covers as input.\n    ",
+    "signature_prefix": "Title:",
+    "extended_signature_instructions": "\n    Write a title for a blog post given a description of the topics the blog covers as input.\n    ",
+    "extended_signature_prefix": "Title:"
+  }
+}
