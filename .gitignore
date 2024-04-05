@@ -164,3 +164,6 @@ cython_debug/
 nbs/chroma
 nbs/local_cache
 nbs/repos 
+
+# Ollama Image 
+regen-requester/ollama
