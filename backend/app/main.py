@@ -24,3 +24,18 @@ async def root():
         dict: A dictionary with a greeting message.
     """
     return {"Hello": "Claudio", "Hi There": "Rosie"}
+
+
+@app.get("/weather")
+async def weather():
+    return {"location": "San Diego", "temperature": 72.1, "precipitation": 0}
+
+
+@app.get("/air_quality")
+async def air_quality():
+    return {"location": "San Diego", "AQI": 45, "pollutant": "PM2.5"}
+
+
+@app.get("/traffic")
+async def traffic():
+    return {"location": "San Diego", "congestion": "Moderate", "average_speed": 45.2}
