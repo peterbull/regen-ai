@@ -1,0 +1,20 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend.dockerfile
+    image: ${BACKEND_IMAGE_NAME:-backend}:latest
+    container_name: ${BACKEND_CONTAINER_NAME:-backend}
+    env_file:
+      - .env
+    command: sh -c "uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
