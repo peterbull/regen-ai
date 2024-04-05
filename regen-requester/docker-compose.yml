@@ -4,6 +4,12 @@ services:
     build:
       context: .
       dockerfile: ollama.dockerfile
+    command:
+      [
+        "bash",
+        "-c",
+        "ollama create ${OLLAMA_MODEL_ALIAS} -f /usr/share/modelfiles/Modelfile",
+      ]
     # command: serve
     # entrypoint: ["tail", "-f", "/dev/null"]
     env_file:
@@ -19,6 +25,7 @@ services:
       - ./ollama:/root/.ollama
       # - ./.ollama:/usr/share/ollama
       - ./downloads:/usr/share/downloads
+      - ./modelfiles:/usr/share/modelfiles
     ports:
       - 11434:11434
     container_name: ollama
