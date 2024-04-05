@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  ollama:
+    build:
+      context: .
+      dockerfile: ollama.dockerfile
+    # command: serve
+    # entrypoint: ["tail", "-f", "/dev/null"]
+    env_file:
+      - .env
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      - ./ollama:/root/.ollama
+      # - ./.ollama:/usr/share/ollama
+      - ./downloads:/usr/share/downloads
+    ports:
+      - 11434:11434
+    container_name: ollama
+
+  app:
+    build:
+      context: .
+      dockerfile: regenrequester.dockerfile
+    environment:
+      - POETRY_VERSION=1.7.1
+      - PYTHONPATH=/usr/src/app
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - ollama
+
+volumes:
+  ollama:
