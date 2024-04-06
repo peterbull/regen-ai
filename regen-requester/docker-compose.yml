@@ -48,7 +48,7 @@ services:
       - INSTRUMENT_LLAMA_INDEX=false
     env_file:
       - .env
-    entrypoint: ["tail", "-f", "/dev/null"]
+    # entrypoint: "tail", "-f", "/dev/null"]
     volumes:
       - .:/usr/src/app
     depends_on:
@@ -66,5 +66,5 @@ volumes:
 
 networks:
   backend_my_network:
-    external:
-      name: backend_my_network
+    external: true
+    name: backend_my_network

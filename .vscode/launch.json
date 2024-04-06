@@ -23,7 +23,7 @@
             "justMyCode": false
         },
         {
-            "name": "Docker: Attach to FastAPI",
+            "name": "Docker: Attach to FastAPI Backend",
             "type": "debugpy",
             "request": "attach",
             "connect": {
@@ -33,6 +33,21 @@
             "pathMappings": [
                 {
                     "localRoot": "${workspaceFolder}/backend/app",
+                    "remoteRoot": "/usr/src/app/app"
+                }
+            ]
+        },
+        {
+            "name": "Docker: Attach to Regen-Requester",
+            "type": "debugpy",
+            "request": "attach",
+            "connect": {
+                "port": 5679,
+                "host": "localhost",
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/regen-requester/app",
                     "remoteRoot": "/usr/src/app/app"
                 }
             ]
