@@ -6,11 +6,12 @@ import os
 import aiohttp
 from fastapi import FastAPI
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG, format="%(levelname)s: %(message)s")
 
 app = FastAPI()
 
 
+# Test root endpoint and ollama endpoint
 async def main():
     async with aiohttp.ClientSession() as session:
         async with session.get("http://backend:8000") as res:
@@ -28,8 +29,31 @@ async def main():
                     buffer += chunk.decode()
                     if buffer.endswith("\n"):
                         response = json.loads(buffer)
-                        logging.info(response)
+                        logging.info(response.get("response"))
                         buffer = ""
 
 
+# Check the openapi schema
+async def get_schema():
+    async with aiohttp.ClientSession() as session:
+        async with session.get("http://backend:8000/openapi.json") as res:
+            if res.status == 200:
+                response = await res.json()
+                logging.info(response)
+
+    return response
+
+
+async def get_weather():
+    async with aiohttp.ClientSession() as session:
+        async with session.get("http://backend:8000/weather") as res:
+            if res.status == 200:
+                response = await res.json()
+                logging.info(response)
+
+    return response
+
+
 task = asyncio.create_task(main())
+task_2 = asyncio.create_task(get_schema())
+task_3 = asyncio.create_task(get_weather())
