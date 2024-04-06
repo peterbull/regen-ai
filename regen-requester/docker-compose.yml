@@ -37,10 +37,21 @@ services:
     environment:
       - POETRY_VERSION=1.7.1
       - PYTHONPATH=/usr/src/app
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - COLLECTOR_ENDPOINT=http://phoenix:6006/v1/traces
+      - PROD_CORS_ORIGIN=http://localhost:3000
+      # Set INSTRUMENT_LLAMA_INDEX=false to disable instrumentation
+      - INSTRUMENT_LLAMA_INDEX=false
+    entrypoint: ["tail", "-f", "/dev/null"]
     volumes:
       - .:/usr/src/app
     depends_on:
       - ollama
+
+  phoenix:
+    image: arizephoenix/phoenix:latest
+    ports:
+      - "6006:6006"
 
 volumes:
   ollama:
