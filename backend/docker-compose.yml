@@ -1,5 +1,7 @@
 services:
   backend:
+    networks:
+      - my_network
     build:
       context: .
       dockerfile: backend.dockerfile
@@ -18,3 +20,7 @@ services:
       timeout: 10s
       retries: 5
       start_period: 30s
+
+networks:
+  my_network:
+    driver: bridge

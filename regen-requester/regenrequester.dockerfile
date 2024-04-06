@@ -7,7 +7,7 @@ ENV PYTHONPATH /usr/src/app
 
 COPY pyproject.toml poetry.lock ./
 RUN apt-get update --fix-missing && \
-    apt-get install --no-install-recommends -y gcc libc-dev libpq-dev
+    apt-get install --no-install-recommends -y gcc libc-dev libpq-dev curl
 
 # RUN curl -fsSL https://ollama.com/install.sh | sh
 
