@@ -1,0 +1,3 @@
+{
+  "weather": "http://backend:8000/weather"
+}

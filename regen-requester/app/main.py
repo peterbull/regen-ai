@@ -44,12 +44,40 @@ async def get_schema():
     return response
 
 
+async def ollama_input(input):
+    async with aiohttp.ClientSession() as session:
+        url = "http://ollama:11434/api/generate"
+        data = {
+            "model": "open-hermes-2-4_0",
+            "prompt": f"Based on this schema: {input} finish this endpoint for weather. Only output endpoint: http://backend:8000",
+        }
+
+        async with session.post(url, data=json.dumps(data)) as res:
+            if res.status == 200:
+                buffer = ""
+                responses = []
+                async for chunk in res.content.iter_any():
+                    buffer += chunk.decode()
+                    if buffer.endswith("\n"):
+                        response = json.loads(buffer)
+                        responses.append(response)
+                        logging.info(response.get("response"))
+                        buffer = ""
+
+    return responses
+
+
+# Get weather data
 async def get_weather():
     async with aiohttp.ClientSession() as session:
-        async with session.get("http://backend:8000/weather") as res:
+        async with session.get("http://backend:8000/weathers") as res:
             if res.status == 200:
                 response = await res.json()
                 logging.info(response)
+            else:
+                logging.error(f"Failed to get weather data: {res.status}")
+                data = await get_schema()
+                response = await ollama_input(json.dumps(data))
 
     return response
 
