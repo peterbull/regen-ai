@@ -40,6 +40,7 @@ fastapi = "^0.110.1"
 uvicorn = "^0.29.0"
 pytest = "^8.1.1"
 dspy = {git = "https://github.com/stanfordnlp/dspy.git"}
+aiofiles = "^23.2.1"
 
 [build-system]
 requires = ["poetry-core"]

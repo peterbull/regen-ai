@@ -2,7 +2,9 @@ import asyncio
 import json
 import logging
 import os
+from urllib.parse import urlparse
 
+import aiofiles
 import aiohttp
 import dspy
 from fastapi import FastAPI
@@ -36,7 +38,19 @@ llm = dspy.OllamaLocal(
 )
 dspy.settings.configure(lm=llm)
 
+logger.info(os.getcwd())
 
+
+########## Assertions ##########
+def is_url(string):
+    try:
+        result = urlparse(string)
+        return all([result.scheme])
+    except ValueError:
+        return False
+
+
+########## DSPy ##########
 class GenerateEndpoint(dspy.Signature):
     """
     Return the correct endpoint based on the given schema.
@@ -45,7 +59,9 @@ class GenerateEndpoint(dspy.Signature):
     task = dspy.InputField(desc="The error message for the requested endpoint.")
     url = dspy.InputField(desc="The attempted url.")
     context = dspy.InputField(desc="OpenAPI spec for the API.")
-    endpoint = dspy.OutputField(desc="The corrected endpoint.")
+    endpoint = dspy.OutputField(
+        desc="The corrected endpoint. IMPORTANT!! This must be just the full corrected url and nothing else!"
+    )
 
 
 class EndpointGenerator(dspy.Module):
@@ -55,7 +71,15 @@ class EndpointGenerator(dspy.Module):
 
     def forward(self, task, context, url):
         result = self.process_endpoint(task=task, context=context, url=url)
-        return result.endpoint
+        endpoint = result.endpoint
+
+        # Assertion: Format and syntax validation
+        dspy.Suggest(
+            is_url(endpoint),
+            f"The endpoint '{endpoint}' must be a url that adheres to the API's endpoint format and syntax rules.",
+        )
+
+        return endpoint
 
 
 # Test root endpoint and ollama endpoint
@@ -117,24 +141,33 @@ async def ollama_input(input):
 # Get weather data
 async def get_weather():
     async with aiohttp.ClientSession() as session:
-        url = "http://backend:8000/weathers"
+        async with aiofiles.open("./app/data/endpoints.json", "r") as f:
+            content = await f.read()
+            urls = json.loads(content)
+        url = urls.get("weather")
+
         async with session.get(url) as res:
             if res.status == 200:
                 response = await res.json()
                 logger.info(response)
+                logger.info(url)
             else:
-                logging.error(f"Failed to get weather data: {res.status}")
+                logger.error(f"Failed to get weather data: {res.status}")
                 content = await res.content.read()
                 task = content.decode()
                 context = await get_schema()
-                # response = await ollama_input(json.dumps(data))
                 endpoint_generator = EndpointGenerator()
                 endpoint = await asyncio.to_thread(
                     endpoint_generator, task=task, context=json.dumps(context), url=url
                 )
-                print("hello")
                 logger.info(f"Endpoint: {endpoint}")
+                async with session.get(endpoint) as new_res:
+                    if new_res.status == 200:
+                        urls["weather"] = endpoint
 
+                        # Update the endpoints file
+                        async with aiofiles.open("./app/data/endpoints.json", "w") as f:
+                            await f.write(json.dumps(urls))
     return response
 
 
