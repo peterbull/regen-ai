@@ -4,10 +4,29 @@ import logging
 import os
 
 import aiohttp
+import dspy
 from fastapi import FastAPI
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger = logging.getLogger("dspy")
+
+#####################################
+# Temporarily overwrite dspy logger #
+#####################################
+# Remove all handlers from the logger
+for handler in logger.handlers[:]:
+    logger.removeHandler(handler)
+
+# Create a console handler with a specific log level
+handler = logging.StreamHandler()
+handler.setLevel(logging.DEBUG)
+
+# Create a formatter and add it to the handler
+formatter = logging.Formatter("%(levelname)s: %(message)s")
+handler.setFormatter(formatter)
+
+# Add the handler to the logger
+logger.addHandler(handler)
+
 
 app = FastAPI()
 
