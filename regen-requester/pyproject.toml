@@ -24,7 +24,6 @@ seaborn = "^0.13.2"
 langfuse = "^2.21.1"
 langsmith = "^0.1.38"
 numpy = "^1.26.4"
-dspy-ai = "^2.4.0"
 transformers = "^4.39.2"
 accelerate = "^0.28.0"
 peft = "^0.10.0"
@@ -40,6 +39,7 @@ watchdog = "^4.0.0"
 fastapi = "^0.110.1"
 uvicorn = "^0.29.0"
 pytest = "^8.1.1"
+dspy = {git = "https://github.com/stanfordnlp/dspy.git"}
 
 [build-system]
 requires = ["poetry-core"]

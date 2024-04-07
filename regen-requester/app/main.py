@@ -6,7 +6,8 @@ import os
 import aiohttp
 from fastapi import FastAPI
 
-logging.basicConfig(level=logging.DEBUG, format="%(levelname)s: %(message)s")
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 app = FastAPI()
 
@@ -17,7 +18,7 @@ async def main():
         async with session.get("http://backend:8000") as res:
             if res.status == 200:
                 response = await res.json()
-                logging.info(response)
+                logger.info(response)
 
         url = "http://ollama:11434/api/generate"
         data = {"model": "open-hermes-2-4_0", "prompt": "Why is the sky blue?"}
@@ -29,7 +30,7 @@ async def main():
                     buffer += chunk.decode()
                     if buffer.endswith("\n"):
                         response = json.loads(buffer)
-                        logging.info(response.get("response"))
+                        logger.info(response.get("response"))
                         buffer = ""
 
 
@@ -39,7 +40,7 @@ async def get_schema():
         async with session.get("http://backend:8000/openapi.json") as res:
             if res.status == 200:
                 response = await res.json()
-                logging.info(response)
+                logger.info(response)
 
     return response
 
@@ -61,7 +62,7 @@ async def ollama_input(input):
                     if buffer.endswith("\n"):
                         response = json.loads(buffer)
                         responses.append(response)
-                        logging.info(response.get("response"))
+                        logger.info(response.get("response"))
                         buffer = ""
 
     return responses
@@ -73,7 +74,7 @@ async def get_weather():
         async with session.get("http://backend:8000/weathers") as res:
             if res.status == 200:
                 response = await res.json()
-                logging.info(response)
+                logger.info(response)
             else:
                 logging.error(f"Failed to get weather data: {res.status}")
                 data = await get_schema()
@@ -81,6 +82,9 @@ async def get_weather():
 
     return response
 
+
+if __name__ == "__main__":
+    asyncio.run(main())
 
 task = asyncio.create_task(main())
 task_2 = asyncio.create_task(get_schema())

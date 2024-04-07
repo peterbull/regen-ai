@@ -1202,39 +1202,43 @@ files = [
 ]
 
 [[package]]
-name = "dspy-ai"
-version = "2.4.0"
+name = "dspy"
+version = "2.0.8"
 description = "DSPy"
 optional = false
-python-versions = ">=3.9"
-files = [
-    {file = "dspy-ai-2.4.0.tar.gz", hash = "sha256:d646ec015270b70bd51916346c01680923ccfa386c9e5474caac6d4366148678"},
-    {file = "dspy_ai-2.4.0-py3-none-any.whl", hash = "sha256:edea508dc315702f61ae39568eaf2d8789ba4f8682102e730e016801b9102703"},
-]
+python-versions = ">=3.9,<3.12"
+files = []
+develop = false
 
 [package.dependencies]
-backoff = ">=2.2.1,<2.3.0"
-datasets = ">=2.14.6,<2.15.0"
-joblib = ">=1.3.2,<1.4.0"
+backoff = "^2.2.1"
+datasets = "^2.14.6"
+joblib = "^1.3.2"
 openai = ">=0.28.1,<2.0.0"
-optuna = "*"
-pandas = "*"
-pydantic = "2.5.0"
-regex = "*"
-requests = "*"
-tqdm = "*"
-ujson = "*"
+optuna = "^3.4.0"
+pandas = "^2.1.1"
+pydantic = ">=2.5.0,<=2.7"
+regex = "^2023.10.3"
+requests = "^2.31.0"
+rich = "^13.7.1"
+structlog = "^24.1.0"
+tqdm = "^4.66.1"
+ujson = "^5.8.0"
 
 [package.extras]
 chromadb = ["chromadb (>=0.4.14,<0.5.0)"]
-dev = ["pytest (>=6.2.5)"]
-docs = ["autodoc-pydantic", "docutils (<0.17)", "furo (>=2023.3.27)", "m2r2", "myst-nb", "myst-parser", "sphinx (>=4.3.0)", "sphinx-autobuild", "sphinx-automodapi (==0.16.0)", "sphinx-reredirects (>=0.1.2)", "sphinx-rtd-theme"]
-faiss-cpu = ["faiss-cpu", "sentence-transformers"]
-marqo = ["marqo", "marqo (>=3.1.0,<3.2.0)"]
-mongodb = ["pymongo (>=3.12.0,<3.13.0)"]
-pinecone = ["pinecone-client (>=2.2.4,<2.3.0)"]
-qdrant = ["fastembed", "fastembed (>=0.1.0,<0.2.0)", "qdrant-client", "qdrant-client (>=1.6.2,<1.7.0)"]
-weaviate = ["weaviate-client (>=3.26.1,<3.27.0)"]
+docs = ["autodoc_pydantic", "docutils (<0.17)", "furo (>=2023.3.27)", "m2r2", "myst-nb", "myst-parser", "sphinx (>=4.3.0)", "sphinx-autobuild", "sphinx-automodapi (==0.16.0)", "sphinx-reredirects (>=0.1.2,<0.2.0)", "sphinx_rtd_theme"]
+marqo = ["marqo"]
+pinecone = ["pinecone-client (>=2.2.4,<3.0.0)"]
+postgres = ["pgvector (>=0.2.5,<0.3.0)", "psycopg2 (>=2.9.9,<3.0.0)"]
+qdrant = ["fastembed (>=0.1.0,<0.2.0)", "qdrant-client (>=1.6.2,<2.0.0)"]
+weaviate = ["weaviate-client (>=4.5.4,<5.0.0)"]
+
+[package.source]
+type = "git"
+url = "https://github.com/stanfordnlp/dspy.git"
+reference = "HEAD"
+resolved_reference = "37ee5dc8e7a628a92320a1b1944884f75563d659"
 
 [[package]]
 name = "exceptiongroup"
@@ -5895,6 +5899,23 @@ files = [
 ]
 
 [[package]]
+name = "structlog"
+version = "24.1.0"
+description = "Structured Logging for Python"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "structlog-24.1.0-py3-none-any.whl", hash = "sha256:3f6efe7d25fab6e86f277713c218044669906537bb717c1807a09d46bca0714d"},
+    {file = "structlog-24.1.0.tar.gz", hash = "sha256:41a09886e4d55df25bdcb9b5c9674bccfab723ff43e0a86a1b7b236be8e57b16"},
+]
+
+[package.extras]
+dev = ["structlog[tests,typing]"]
+docs = ["furo", "myst-parser", "sphinx", "sphinx-notfound-page", "sphinxcontrib-mermaid", "sphinxext-opengraph", "twisted"]
+tests = ["freezegun (>=0.2.8)", "pretend", "pytest (>=6.0)", "pytest-asyncio (>=0.17)", "simplejson"]
+typing = ["mypy (>=1.4)", "rich", "twisted"]
+
+[[package]]
 name = "sympy"
 version = "1.12"
 description = "Computer algebra system (CAS) in Python"
@@ -7299,4 +7320,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "cbfe96d067554f6ebd9927e8f65cfa0c01bd22744c8f940c9c94d5a1ae6fd3c5"
+content-hash = "9818b82f9a15d47ec3ef8bc4d833533cb2b9c94fd597f325bd5f14c33d25a16c"
