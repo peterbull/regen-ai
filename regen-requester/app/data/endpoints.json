@@ -1,1 +1,1 @@
-{ "weather": "http://backend:8000/weatherstuff" }
+{"weather": "http://backend:8000/weather"}

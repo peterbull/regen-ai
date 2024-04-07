@@ -31,6 +31,7 @@ logger.addHandler(handler)
 
 # Fastapi
 app = FastAPI()
+base_url = "http://backend:8000/"
 
 # DSPy model
 llm = dspy.OllamaLocal(
@@ -57,10 +58,12 @@ class GenerateEndpoint(dspy.Signature):
     """
 
     task = dspy.InputField(desc="The error message for the requested endpoint.")
-    url = dspy.InputField(desc="The attempted url.")
+    url = dspy.InputField(desc="The failed url.")
+    base_url = dspy.InputField(desc="The root url for the api.")
+    desired_info = dspy.InputField(desc="The desired data to gather from the endpoint.")
     context = dspy.InputField(desc="OpenAPI spec for the API.")
     endpoint = dspy.OutputField(
-        desc="The corrected endpoint. IMPORTANT!! This must be just the full corrected url and nothing else!"
+        desc="The correct endpoint url. IMPORTANT!! This must be just the full new url and nothing else!"
     )
 
 
@@ -69,8 +72,10 @@ class EndpointGenerator(dspy.Module):
         super().__init__()
         self.process_endpoint = dspy.ChainOfThought(GenerateEndpoint)
 
-    def forward(self, task, context, url):
-        result = self.process_endpoint(task=task, context=context, url=url)
+    def forward(self, task, context, base_url, url, desired_info):
+        result = self.process_endpoint(
+            task=task, context=context, base_url=base_url, url=url, desired_info=desired_info
+        )
         endpoint = result.endpoint
 
         # Assertion: Format and syntax validation
@@ -158,7 +163,12 @@ async def get_weather():
                 context = await get_schema()
                 endpoint_generator = EndpointGenerator()
                 endpoint = await asyncio.to_thread(
-                    endpoint_generator, task=task, context=json.dumps(context), url=url
+                    endpoint_generator,
+                    task=task,
+                    context=json.dumps(context),
+                    base_url=base_url,
+                    desired_info="weather",
+                    url=url,
                 )
                 logger.info(f"Endpoint: {endpoint}")
                 async with session.get(endpoint) as new_res:
@@ -168,7 +178,18 @@ async def get_weather():
                         # Update the endpoints file
                         async with aiofiles.open("./app/data/endpoints.json", "w") as f:
                             await f.write(json.dumps(urls))
+                        return new_res
     return response
+
+
+async def periodic_weather_update():
+    n = 0
+    while n < 20:
+        try:
+            await get_weather()
+        except Exception as e:
+            logger.error(f"Failed to update weather: {e}")
+        await asyncio.sleep(10)
 
 
 if __name__ == "__main__":
@@ -177,3 +198,4 @@ if __name__ == "__main__":
 task = asyncio.create_task(main())
 task_2 = asyncio.create_task(get_schema())
 task_3 = asyncio.create_task(get_weather())
+task_4 = asyncio.create_task(periodic_weather_update())
