@@ -27,8 +27,35 @@ handler.setFormatter(formatter)
 # Add the handler to the logger
 logger.addHandler(handler)
 
-
+# Fastapi
 app = FastAPI()
+
+# DSPy model
+llm = dspy.OllamaLocal(
+    "open-hermes-2-4_0", base_url="http://ollama:11434", max_tokens=3000, model_type="chat"
+)
+dspy.settings.configure(lm=llm)
+
+
+class GenerateEndpoint(dspy.Signature):
+    """
+    Return the correct endpoint based on the given schema.
+    """
+
+    task = dspy.InputField(desc="The error message for the requested endpoint.")
+    url = dspy.InputField(desc="The attempted url.")
+    context = dspy.InputField(desc="OpenAPI spec for the API.")
+    endpoint = dspy.OutputField(desc="The corrected endpoint.")
+
+
+class EndpointGenerator(dspy.Module):
+    def __init__(self):
+        super().__init__()
+        self.process_endpoint = dspy.ChainOfThought(GenerateEndpoint)
+
+    def forward(self, task, context, url):
+        result = self.process_endpoint(task=task, context=context, url=url)
+        return result.endpoint
 
 
 # Test root endpoint and ollama endpoint
@@ -90,14 +117,23 @@ async def ollama_input(input):
 # Get weather data
 async def get_weather():
     async with aiohttp.ClientSession() as session:
-        async with session.get("http://backend:8000/weathers") as res:
+        url = "http://backend:8000/weathers"
+        async with session.get(url) as res:
             if res.status == 200:
                 response = await res.json()
                 logger.info(response)
             else:
                 logging.error(f"Failed to get weather data: {res.status}")
-                data = await get_schema()
-                response = await ollama_input(json.dumps(data))
+                content = await res.content.read()
+                task = content.decode()
+                context = await get_schema()
+                # response = await ollama_input(json.dumps(data))
+                endpoint_generator = EndpointGenerator()
+                endpoint = await asyncio.to_thread(
+                    endpoint_generator, task=task, context=json.dumps(context), url=url
+                )
+                print("hello")
+                logger.info(f"Endpoint: {endpoint}")
 
     return response
 
