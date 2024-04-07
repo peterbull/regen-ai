@@ -154,7 +154,7 @@ async def get_weather():
         async with session.get(url) as res:
             if res.status == 200:
                 response = await res.json()
-                logger.info(response)
+                logger.info(json.dumps(response, indent=4))
                 logger.info(url)
             else:
                 logger.error(f"Failed to get weather data: {res.status}")
