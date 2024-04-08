@@ -167,3 +167,6 @@ nbs/repos
 
 # Ollama Image 
 regen-requester/ollama
+
+# Node
+node_modules
