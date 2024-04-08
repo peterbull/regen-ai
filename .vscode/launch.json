@@ -52,5 +52,21 @@
                 }
             ]
         },
+        {
+            "name": "Docker: Attach to Regen-Requester All Code",
+            "type": "debugpy",
+            "request": "attach",
+            "connect": {
+                "port": 5679,
+                "host": "localhost",
+            },
+            "justMyCode": false,
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/regen-requester/app",
+                    "remoteRoot": "/usr/src/app/app"
+                }
+            ]
+        },
     ]
 }

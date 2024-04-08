@@ -26,7 +26,7 @@ async def root():
     return {"Hello": "Claudio", "Hi There": "Rosie"}
 
 
-@app.get("/weather/lostandfound")
+@app.get("/weather")
 async def weather():
     """
     Retrieves the weather forecast
@@ -37,7 +37,13 @@ async def weather():
             - temperature (float): The temperature in Fahrenheit.
             - precipitation (float): The precipitation in inches.
     """
-    return {"location": "San Diego", "temperature": 72.1, "precipitation": 0}
+    return [
+        {"location": "San Diego", "temperature": 72.1, "precipitation": 0},
+        {"location": "New York", "temperature": 60.5, "precipitation": 0.2},
+        {"location": "Chicago", "temperature": 55.3, "precipitation": 0.1},
+        {"location": "Seattle", "temperature": 65.2, "precipitation": 0.8},
+        {"location": "Miami", "temperature": 80.6, "precipitation": 0.0},
+    ]
 
 
 @app.get("/air_quality")
@@ -48,7 +54,13 @@ async def air_quality():
     Returns:
         dict: A dictionary containing the location, AQI (Air Quality Index), and pollutant information.
     """
-    return {"location": "San Diego", "AQI": 45, "pollutant": "PM2.5"}
+    return [
+        {"location": "San Diego", "AQI": 45, "pollutant": "PM2.5"},
+        {"location": "New York", "AQI": 30, "pollutant": "PM10"},
+        {"location": "Chicago", "AQI": 55, "pollutant": "PM2.5"},
+        {"location": "Seattle", "AQI": 35, "pollutant": "PM10"},
+        {"location": "Miami", "AQI": 40, "pollutant": "PM2.5"},
+    ]
 
 
 @app.get("/traffic")
@@ -59,4 +71,10 @@ async def traffic():
     Returns:
         dict: A dictionary containing traffic information including location, congestion, and average speed.
     """
-    return {"location": "San Diego", "congestion": "Moderate", "average_speed": 45.2}
+    return [
+        {"location": "San Diego", "congestion": "Moderate", "average_speed": 45.2},
+        {"location": "New York", "congestion": "High", "average_speed": 30.5},
+        {"location": "Chicago", "congestion": "Low", "average_speed": 55.3},
+        {"location": "Seattle", "congestion": "Moderate", "average_speed": 35.2},
+        {"location": "Miami", "congestion": "High", "average_speed": 40.6},
+    ]
