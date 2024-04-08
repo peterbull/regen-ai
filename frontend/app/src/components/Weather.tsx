@@ -11,7 +11,9 @@ const s3 = new AWS.S3();
 
 const Weather: React.FC<any> = () => {
   const [weather, setWeather] = useState<any>([]);
-  const [weatherEndpoint, setWeatherEndpoint] = useState<any>("");
+  const [weatherEndpoint, setWeatherEndpoint] = useState<any>(
+    "http://localhost:8000/weather"
+  );
   const [lastUpdated, setLastUpdated] = useState<Date>(
     new Date("1900-01-01T12:00:00")
   );
@@ -32,8 +34,13 @@ const Weather: React.FC<any> = () => {
               s3.getObject(params, function (err, data: any) {
                 if (err) console.log(err, err.stack);
                 else {
-                  const endpoints = JSON.parse(data.Body.toString());
-                  console.log(endpoints);
+                  let endpoint = JSON.parse(data.Body.toString());
+                  endpoint.weather = endpoint.weather.replace(
+                    "backend",
+                    "localhost"
+                  );
+                  setWeatherEndpoint(endpoint.weather);
+                  console.log(endpoint.weather);
                 }
               });
             }
@@ -43,9 +50,20 @@ const Weather: React.FC<any> = () => {
         console.error(error);
       }
     };
-
     fetchEndpoint();
+    const intervalId = setInterval(fetchEndpoint, 10000);
+    return () => clearInterval(intervalId); // Clear interval on component unmount
   }, [lastUpdated]);
+
+  useEffect(() => {
+    const fetchWeather = async () => {
+      const res = await fetch(weatherEndpoint);
+      const data = await res.json();
+      setWeather(data);
+      console.log(data);
+    };
+    fetchWeather();
+  }, [weatherEndpoint]);
 
   return (
     <>
