@@ -1,0 +1,7 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: frontend.dockerfile
+      args:
+        REACT_APP_BACKEND_URL: ${REACT_APP_BACKEND_URL}

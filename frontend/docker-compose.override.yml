@@ -1,0 +1,12 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: frontend.dev.dockerfile
+    volumes:
+      - ./frontend/app:/usr/src/app
+      # - ./frontend/app/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "3001:3000"
+      - "9229:9229"
+    command: npm run start
