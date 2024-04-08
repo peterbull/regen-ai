@@ -23,6 +23,22 @@
             "justMyCode": false
         },
         {
+            "name": "Launch Chrome against localhost client",
+            "request": "launch",
+            // "preLaunchTask": "npm: start",
+            "type": "pwa-chrome",
+            "url": "http://localhost:3000/",
+            "webRoot": "${workspaceFolder}/frontend/app",
+            "sourceMaps": true,
+            "skipFiles": [
+                "<node_internals>/**/*.js",
+                "${workspaceFolder}/frontend/app/node_modules/**/*.js",
+                "${workspaceFolder}/frontend/app/node_modules/**/*.js",
+                "${workspaceFolder}/frontend/app/node_modules/**/*.mjs",
+                "**/build/*"
+            ]
+        },
+        {
             "name": "Docker: Attach to FastAPI Backend",
             "type": "debugpy",
             "request": "attach",
