@@ -43,6 +43,7 @@ dspy = {git = "https://github.com/stanfordnlp/dspy.git"}
 aiofiles = "^23.2.1"
 opentelemetry-exporter-otlp = "^1.24.0"
 ipykernel = "^6.29.4"
+boto3 = "^1.34.79"
 
 [build-system]
 requires = ["poetry-core"]

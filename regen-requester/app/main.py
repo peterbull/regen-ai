@@ -6,7 +6,9 @@ from urllib.parse import urlparse
 
 import aiofiles
 import aiohttp
+import boto3
 import dspy
+from botocore.exceptions import ClientError
 from fastapi import FastAPI
 
 logger = logging.getLogger("dspy")
@@ -105,6 +107,23 @@ class EndpointGenerator(dspy.Module):
         return endpoint
 
 
+########## S3 ##########
+S3_AWS_ACCESS_KEY_ID = os.getenv("S3_AWS_ACCESS_KEY_ID")
+S3_AWS_SECRET_ACCESS_KEY = os.getenv("S3_AWS_SECRET_ACCESS_KEY")
+
+
+def upload_to_s3(file_name, bucket, object_name=None):
+    s3_client = boto3.client(
+        "s3", aws_access_key_id=S3_AWS_ACCESS_KEY_ID, aws_secret_access_key=S3_AWS_SECRET_ACCESS_KEY
+    )
+    try:
+        response = s3_client.upload_file(file_name, bucket, object_name)
+    except ClientError as e:
+        logging.error(e)
+        return False
+    return True
+
+
 # Test root endpoint and ollama endpoint
 async def main():
     async with aiohttp.ClientSession() as session:
@@ -196,6 +215,9 @@ async def get_weather():
                         # Update the endpoints file
                         async with aiofiles.open("./app/data/endpoints.json", "w") as f:
                             await f.write(json.dumps(urls))
+                        upload_to_s3(
+                            "./app/data/endpoints.json", "regen-requester", "endpoints.json"
+                        )
                         return new_res
     return response
 
