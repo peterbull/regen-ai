@@ -1,16 +1,14 @@
 import React from "react";
 import "./App.css";
 import Weather from "./components/Weather";
+import { Discovery } from "aws-sdk";
 
 function App() {
   return (
     <div className="App">
-      <div className="bg-gradient-to-b from-electric to to-electric-dark">
-        <h1 className="text-3xl font-bold underline text-red-600">
-          Simple React Typescript Tailwind Sample
-        </h1>
-        <Weather />
-      </div>
+      <h1 className="text-3xl text-custom-off-white">Regen AI API</h1>
+      <p>testing 2</p>
+      <Weather />
     </div>
   );
 }
