@@ -61,9 +61,15 @@ const Weather: React.FC<any> = () => {
   }, [weatherEndpoint]);
 
   return (
-    <>
-      <p>{JSON.stringify(weather)}</p>
-    </>
+    <div
+      className={`grid grid-cols-${weather.length} gap-4 bg-custom-blue p-4 rounded shadow text-custom-off-white`}
+    >
+      {weather.map((locationForecast: any, index: any) => (
+        <div key={index} className="col-span-1">
+          <p>{JSON.stringify(locationForecast)}</p>
+        </div>
+      ))}
+    </div>
   );
 };
 

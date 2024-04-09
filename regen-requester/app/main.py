@@ -223,8 +223,9 @@ async def get_weather():
 
 
 async def periodic_weather_update():
-    n = 0
-    while n < 20:
+    # n = 0
+    # while n < 20:
+    while True:
         try:
             await get_weather()
         except Exception as e:
