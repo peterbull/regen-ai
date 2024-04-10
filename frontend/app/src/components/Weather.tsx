@@ -47,7 +47,7 @@ const Weather: React.FC<any> = () => {
 
   useEffect(() => {
     checkAndUpdateEndpoint();
-  }, [lastUpdated, fetchCount]);
+  }, []);
 
   useEffect(() => {
     let intervalId: any;
