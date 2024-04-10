@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import AWS from "aws-sdk";
+import LocationForecast from "./LocationForecast";
 
 AWS.config.update({
   accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
@@ -18,57 +19,79 @@ const Weather: React.FC<any> = () => {
     new Date("1900-01-01T12:00:00")
   );
 
+  const [fetchCount, setFetchCount] = useState<number>(0);
+
   useEffect(() => {
     const fetchEndpoint = async () => {
+      if (fetchCount >= 100) return;
       try {
         const params: any = {
           Bucket: process.env.REACT_APP_S3_BUCKET_NAME,
           Key: "endpoints.json",
         };
 
-        const data: any = await s3.headObject(params).promise();
-        const lastModified = new Date(data.LastModified);
+        const { LastModified }: any = await s3.headObject(params).promise();
+        const lastModified: Date = new Date(LastModified);
+
         if (lastModified > lastUpdated) {
-          setLastUpdated(lastModified);
-          const new_data: any = await s3.getObject(params).promise();
-          let endpoint = JSON.parse(new_data.Body.toString());
+          const { Body }: any = await s3.getObject(params).promise();
+          const endpoint = JSON.parse(Body.toString());
           endpoint.weather = endpoint.weather.replace("backend", "localhost");
+
+          setLastUpdated(lastModified);
           setWeatherEndpoint(endpoint.weather);
-          console.log(endpoint.weather);
         }
-      } catch (err: any) {
-        console.log(err, err.stack);
+        setFetchCount(fetchCount + 1); // Add this line
+      } catch (err) {
+        console.error(err);
       }
     };
+
     fetchEndpoint();
-  }, [weather, lastUpdated]);
+  }, [lastUpdated, weatherEndpoint]);
 
   useEffect(() => {
+    let intervalId: any;
+
     const fetchWeather = async () => {
-      const res = await fetch(weatherEndpoint);
-      if (res.status !== 200) {
-        setWeather([{ weather: "Endpoint Changed" }]);
-      } else {
-        const data = await res.json();
-        setWeather(data);
+      try {
+        const res = await fetch(weatherEndpoint);
+        if (res.status === 200) {
+          const newWeather = await res.json();
+          if (JSON.stringify(newWeather) !== JSON.stringify(weather)) {
+            setWeather(newWeather);
+          }
+        } else {
+          setWeather({ error: "Failed to fetch weather data." });
+        }
+      } catch (err) {
+        console.error(err);
       }
-      console.log(weatherEndpoint);
     };
-    fetchWeather();
 
-    const intervalId = setInterval(fetchWeather, 10000);
-    return () => clearInterval(intervalId); // Clear interval on component unmount
+    if (weatherEndpoint) {
+      fetchWeather();
+      intervalId = setInterval(fetchWeather, 10000);
+    }
+
+    return () => intervalId && clearInterval(intervalId);
   }, [weatherEndpoint]);
-
   return (
-    <div
-      className={`grid grid-cols-${weather.length} gap-4 bg-custom-blue p-4 rounded shadow text-custom-off-white`}
-    >
-      {weather.map((locationForecast: any, index: any) => (
-        <div key={index} className="col-span-1">
-          <p>{JSON.stringify(locationForecast)}</p>
-        </div>
-      ))}
+    <div className="bg-custom-blue p-4 rounded shadow text-custom-off-white">
+      <p>
+        Current Endpoint: {weatherEndpoint.replace("http://localhost:8000", "")}
+      </p>
+      <div className="grid grid-cols-3 gap-4">
+        {weather.length > 1 ? (
+          weather.map((locationForecast: any, index: any) => (
+            <div key={index} className="col-span-1">
+              <LocationForecast locationForecast={locationForecast} />
+            </div>
+          ))
+        ) : (
+          <p className="col-start-2">{JSON.stringify(weather)}</p>
+        )}
+      </div>
     </div>
   );
 };
