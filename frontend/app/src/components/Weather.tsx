@@ -78,11 +78,11 @@ const Weather: React.FC<any> = () => {
   }, [weatherEndpoint]);
 
   return (
-    <div className="bg-custom-blue p-4 rounded shadow text-custom-off-white">
+    <div className="bg-custom-blue p-4 rounded-xl shadow text-custom-off-white max-w-xl mx-auto">
       <p>
         Current Endpoint: {weatherEndpoint.replace("http://localhost:8000", "")}
       </p>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-8 px-12">
         {weather.length > 1 ? (
           weather.map((locationForecast: any, index: any) => (
             <div key={index} className="col-span-1">
@@ -90,7 +90,7 @@ const Weather: React.FC<any> = () => {
             </div>
           ))
         ) : (
-          <p className="col-start-2">{JSON.stringify(weather)}</p>
+          <p className="col-start-2 animate-pulse">Healing API</p>
         )}
       </div>
     </div>
