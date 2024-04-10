@@ -1,7 +1,11 @@
 services:
   frontend:
     build:
-      context: ./frontend
+      context: ./
       dockerfile: frontend.dockerfile
       args:
-        REACT_APP_BACKEND_URL: ${REACT_APP_BACKEND_URL}
+        REACT_APP_BACKEND_URL: ${REACT_APP_BACKEND_URL:-}
+        REACT_APP_AWS_ACCESS_KEY_ID: ${REACT_APP_AWS_ACCESS_KEY_ID:-}
+        REACT_APP_AWS_SECRET_ACCESS_KEY: ${REACT_APP_AWS_SECRET_ACCESS_KEY:-}
+        REACT_APP_AWS_REGION: ${REACT_APP_AWS_REGION:-}
+        REACT_APP_S3_BUCKET_NAME: ${REACT_APP_S3_BUCKET_NAME:-}
