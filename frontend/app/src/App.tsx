@@ -5,7 +5,7 @@ import Weather from "./components/Weather";
 function App() {
   return (
     <div className="App">
-      <h1 className="text-3xl text-custom-blue">Regen APAI</h1>
+      <h1 className="text-6xl font-bold text-custom-blue py-6">Regen APAI</h1>
       <Weather />
     </div>
   );

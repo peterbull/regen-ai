@@ -79,7 +79,7 @@ const Weather: React.FC<any> = () => {
 
   return (
     <div className="bg-custom-blue p-4 rounded-xl shadow text-custom-off-white max-w-xl mx-auto">
-      <p>
+      <p className="text-2xl py-2">
         Current Endpoint: {weatherEndpoint.replace("http://localhost:8000", "")}
       </p>
       <div className="grid grid-cols-3 gap-8 px-12">
@@ -90,7 +90,11 @@ const Weather: React.FC<any> = () => {
             </div>
           ))
         ) : (
-          <p className="col-start-2 animate-pulse">Healing API</p>
+          <p className="col-start-2 animate-pulse text-4xl text-custom-mint">
+            Healing API
+            <br />
+            <span className="text-6xl"> ✚ </span>
+          </p>
         )}
       </div>
     </div>
