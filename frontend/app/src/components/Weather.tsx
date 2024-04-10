@@ -78,7 +78,7 @@ const Weather: React.FC<any> = () => {
   }, [weatherEndpoint]);
 
   return (
-    <div className="bg-custom-blue p-4 rounded-xl shadow text-custom-off-white max-w-xl mx-auto">
+    <div className="font-mono bg-custom-blue p-4 rounded-xl shadow-2xl text-custom-off-white max-w-xl mx-auto mt-8">
       <p className="text-2xl py-2">
         Current Endpoint: {weatherEndpoint.replace("http://localhost:8000", "")}
       </p>
