@@ -12,43 +12,42 @@ const s3 = new AWS.S3();
 
 const Weather: React.FC<any> = () => {
   const [weather, setWeather] = useState<any>([]);
-  const [weatherEndpoint, setWeatherEndpoint] = useState<any>(
+  const [weatherEndpoint, setWeatherEndpoint] = useState<string>(
     "http://localhost:8000/weather"
   );
   const [lastUpdated, setLastUpdated] = useState<Date>(
     new Date("1900-01-01T12:00:00")
   );
-
   const [fetchCount, setFetchCount] = useState<number>(0);
 
-  useEffect(() => {
-    const fetchEndpoint = async () => {
-      if (fetchCount >= 100) return;
-      try {
-        const params: any = {
-          Bucket: process.env.REACT_APP_S3_BUCKET_NAME,
-          Key: "endpoints.json",
-        };
+  const checkAndUpdateEndpoint = async () => {
+    if (fetchCount >= 100) return;
+    try {
+      const params: any = {
+        Bucket: process.env.REACT_APP_S3_BUCKET_NAME,
+        Key: "endpoints.json",
+      };
 
-        const { LastModified }: any = await s3.headObject(params).promise();
-        const lastModified: Date = new Date(LastModified);
+      const { LastModified }: any = await s3.headObject(params).promise();
+      const lastModified = new Date(LastModified);
 
-        if (lastModified > lastUpdated) {
-          const { Body }: any = await s3.getObject(params).promise();
-          const endpoint = JSON.parse(Body.toString());
-          endpoint.weather = endpoint.weather.replace("backend", "localhost");
+      if (lastModified > lastUpdated) {
+        const { Body }: any = await s3.getObject(params).promise();
+        const endpoint = JSON.parse(Body.toString());
+        endpoint.weather = endpoint.weather.replace("backend", "localhost");
 
-          setLastUpdated(lastModified);
-          setWeatherEndpoint(endpoint.weather);
-        }
-        setFetchCount(fetchCount + 1); // Add this line
-      } catch (err) {
-        console.error(err);
+        setLastUpdated(lastModified);
+        setWeatherEndpoint(endpoint.weather);
       }
-    };
+      setFetchCount((prevCount) => prevCount + 1);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-    fetchEndpoint();
-  }, [lastUpdated, weatherEndpoint]);
+  useEffect(() => {
+    checkAndUpdateEndpoint();
+  }, [lastUpdated, fetchCount]);
 
   useEffect(() => {
     let intervalId: any;
@@ -58,9 +57,10 @@ const Weather: React.FC<any> = () => {
         const res = await fetch(weatherEndpoint);
         if (res.status === 200) {
           const newWeather = await res.json();
-          if (JSON.stringify(newWeather) !== JSON.stringify(weather)) {
-            setWeather(newWeather);
-          }
+          setWeather(newWeather);
+        } else if (res.status === 404) {
+          setWeather({ error: "Endpoint not found. Checking for updates..." });
+          await checkAndUpdateEndpoint();
         } else {
           setWeather({ error: "Failed to fetch weather data." });
         }
@@ -76,6 +76,7 @@ const Weather: React.FC<any> = () => {
 
     return () => intervalId && clearInterval(intervalId);
   }, [weatherEndpoint]);
+
   return (
     <div className="bg-custom-blue p-4 rounded shadow text-custom-off-white">
       <p>
