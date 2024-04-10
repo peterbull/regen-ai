@@ -26,7 +26,7 @@ async def root():
     return {"Hello": "Claudio", "Hi There": "Rosie"}
 
 
-@app.get("/weather")
+@app.get("/weatherplace")
 async def weather():
     """
     Retrieves the weather forecast
@@ -41,8 +41,8 @@ async def weather():
         {"location": "San Diego", "temperature": 72.1, "precipitation": 0},
         {"location": "New York", "temperature": 60.5, "precipitation": 0.2},
         {"location": "Chicago", "temperature": 55.3, "precipitation": 0.1},
-        {"location": "Seattle", "temperature": 65.2, "precipitation": 0.8},
-        {"location": "Miami", "temperature": 80.6, "precipitation": 0.0},
+        # {"location": "Seattle", "temperature": 65.2, "precipitation": 0.8},
+        # {"location": "Miami", "temperature": 80.6, "precipitation": 0.0},
     ]
 
 
