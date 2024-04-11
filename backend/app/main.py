@@ -26,13 +26,13 @@ async def root():
     return {"Hello": "Claudio", "Hi There": "Rosie"}
 
 
-@app.get("/weatherplace")
+@app.get("/weather")
 async def weather():
     """
-    Retrieves the weather forecast
+    Retrieves all the available weather forecasts.
 
     Returns:
-        dict: A dictionary containing the weather information.
+        dict: A dictionary containing weather information.
             - location (str): The location of the lost and found.
             - temperature (float): The temperature in Fahrenheit.
             - precipitation (float): The precipitation in inches.
@@ -58,8 +58,8 @@ async def air_quality():
         {"location": "San Diego", "AQI": 45, "pollutant": "PM2.5"},
         {"location": "New York", "AQI": 30, "pollutant": "PM10"},
         {"location": "Chicago", "AQI": 55, "pollutant": "PM2.5"},
-        {"location": "Seattle", "AQI": 35, "pollutant": "PM10"},
-        {"location": "Miami", "AQI": 40, "pollutant": "PM2.5"},
+        # {"location": "Seattle", "AQI": 35, "pollutant": "PM10"},
+        # {"location": "Miami", "AQI": 40, "pollutant": "PM2.5"},
     ]
 
 
@@ -75,6 +75,6 @@ async def traffic():
         {"location": "San Diego", "congestion": "Moderate", "average_speed": 45.2},
         {"location": "New York", "congestion": "High", "average_speed": 30.5},
         {"location": "Chicago", "congestion": "Low", "average_speed": 55.3},
-        {"location": "Seattle", "congestion": "Moderate", "average_speed": 35.2},
-        {"location": "Miami", "congestion": "High", "average_speed": 40.6},
+        # {"location": "Seattle", "congestion": "Moderate", "average_speed": 35.2},
+        # {"location": "Miami", "congestion": "High", "average_speed": 40.6},
     ]
