@@ -35,12 +35,15 @@ logger.addHandler(handler)
 app = FastAPI()
 base_url = "http://backend:8000/"
 
+
+########## Ollama ##########
+OLLAMA_MODEL_ALIAS = os.getenv("OLLAMA_MODEL_ALIAS")
+
 # DSPy model
 llm = dspy.OllamaLocal(
-    "open-hermes-2-4_0", base_url="http://ollama:11434", max_tokens=3000, model_type="chat"
+    f"{OLLAMA_MODEL_ALIAS}", base_url="http://ollama:11434", max_tokens=3000, model_type="chat"
 )
 dspy.settings.configure(lm=llm)
-
 
 ########## Arize Phoenix ##########
 import phoenix as px
@@ -107,6 +110,27 @@ class EndpointGenerator(dspy.Module):
         return endpoint
 
 
+# class EndpointRefinement(dspy.Module):
+#     def __init__(self):
+#         super().__init__()
+#         self.refine_endpoint = dspy.ChainOfThought(GenerateEndpoint)
+
+#     def forward(self, task, context, base_url, url, desired_info, attempt=1):
+#         if attempt > 5:
+#             return logger.info("Unable to generate endpoint. Improve process or change models.")
+
+#         result = self.refine_endpoint(
+#             task=task, context=context, base_url=base_url, url=url, desired_info=desired_info
+#         )
+#         endpoint = result.endpoint
+
+#         if not is_url(endpoint):
+#             task = f"Please generate a valid endpoint, previous attempt was not a URL: {endpoint}"
+#             return self.forward(task, context, base_url, url, desired_info, attempt + 1)
+
+#         return endpoint
+
+
 ########## S3 ##########
 S3_AWS_ACCESS_KEY_ID = os.getenv("S3_AWS_ACCESS_KEY_ID")
 S3_AWS_SECRET_ACCESS_KEY = os.getenv("S3_AWS_SECRET_ACCESS_KEY")
@@ -133,7 +157,7 @@ async def main():
                 logger.info(response)
 
         url = "http://ollama:11434/api/generate"
-        data = {"model": "open-hermes-2-4_0", "prompt": "Why is the sky blue?"}
+        data = {"model": f"{OLLAMA_MODEL_ALIAS}", "prompt": "Why is the sky blue?"}
 
         async with session.post(url, data=json.dumps(data)) as res:
             if res.status == 200:
@@ -161,7 +185,7 @@ async def ollama_input(input):
     async with aiohttp.ClientSession() as session:
         url = "http://ollama:11434/api/generate"
         data = {
-            "model": "open-hermes-2-4_0",
+            "model": f"{OLLAMA_MODEL_ALIAS}",
             "prompt": f"Based on this schema: {input} finish this endpoint for weather. Only output endpoint: http://backend:8000",
         }
 
@@ -199,8 +223,10 @@ async def get_weather():
                 task = content.decode()
                 context = await get_schema()
                 endpoint_generator = EndpointGenerator()
+                # endpoint_refiner = EndpointRefinement()
                 endpoint = await asyncio.to_thread(
                     endpoint_generator,
+                    # endpoint_refiner,
                     task=task,
                     context=json.dumps(context),
                     base_url=base_url,

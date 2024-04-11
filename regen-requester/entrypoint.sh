@@ -14,8 +14,8 @@ export HF_HOME=/usr/share/downloads
 #     huggingface-cli download $HUGGINGFACE_MODEL_DIR $HUGGINGFACE_MODEL_NAME --local-dir /usr/share/downloads   --local-dir-use-symlinks False
 # fi
 
-# Config model from Modelfile
-# ollama create $OLLAMA_MODEL_ALIAS -f /usr/share/modelfiles/Modelfile
+# # Config model from Modelfile
+# ollama create $OLLAMA_MODEL_ALIAS -f /usr/share/modelfiles/$OLLAMA_MODEL_ALIAS/Modelfile
 
 # Start server
 ollama serve
