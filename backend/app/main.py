@@ -1,3 +1,5 @@
+import random
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -14,6 +16,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+endpoints = [
+    "weather",
+    "weatherhome",
+    "shrimp/1/2/3/.tar.gz",
+    "corbs/wind/bricks",
+    "weather/all",
+    "foodtoeat",
+    "gringergy",
+    "iandi",
+]
+endpoint = random.choice(endpoints)
+
 
 @app.get("/")
 async def root():
@@ -26,7 +40,7 @@ async def root():
     return {"Hello": "Claudio", "Hi There": "Rosie"}
 
 
-@app.get("/weather")
+@app.get(f"/{endpoint}")
 async def weather():
     """
     Retrieves all the available weather forecasts.
