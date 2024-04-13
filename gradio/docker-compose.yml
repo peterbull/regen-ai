@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  gradio-app:
+    build:
+      context: .
+      dockerfile: gradio.dockerfile
+    env_file:
+      - .env
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - 7860:7860
+    command: python app.py
