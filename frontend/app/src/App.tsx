@@ -1,7 +1,9 @@
 import React from "react";
 import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Weather from "./components/Weather";
 import NavButton from "./components/NavButton";
+import RagTest from "./components/RagTest";
 
 function App() {
   return (
@@ -14,6 +16,12 @@ function App() {
         <NavButton name="Trace in Phoenix" redirect="http://localhost:6006" />
         <NavButton name="API Docs" redirect="http://localhost:8000/docs" />
       </div>
+      {/* 
+      <Router>
+        <Routes>
+          <Route path="/rag" component={RagTest} />
+        </Routes>
+      </Router> */}
     </div>
   );
 }
