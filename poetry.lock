@@ -1202,46 +1202,6 @@ files = [
 ]
 
 [[package]]
-name = "dspy"
-version = "2.0.8"
-description = "DSPy"
-optional = false
-python-versions = ">=3.9,<3.12"
-files = []
-develop = false
-
-[package.dependencies]
-backoff = "^2.2.1"
-datasets = "^2.14.6"
-joblib = "^1.3.2"
-openai = ">=0.28.1,<2.0.0"
-optuna = "^3.4.0"
-pandas = "^2.1.1"
-pydantic = ">=2.5.0,<=2.7"
-regex = "^2023.10.3"
-requests = "^2.31.0"
-rich = "^13.7.1"
-structlog = "^24.1.0"
-tqdm = "^4.66.1"
-ujson = "^5.8.0"
-
-[package.extras]
-chromadb = ["chromadb (>=0.4.14,<0.5.0)"]
-docs = ["autodoc_pydantic", "docutils (<0.17)", "furo (>=2023.3.27)", "m2r2", "myst-nb", "myst-parser", "sphinx (>=4.3.0)", "sphinx-autobuild", "sphinx-automodapi (==0.16.0)", "sphinx-reredirects (>=0.1.2,<0.2.0)", "sphinx_rtd_theme"]
-marqo = ["marqo"]
-milvus = ["pymilvus (>=2.3.6,<3.0.0)"]
-pinecone = ["pinecone-client (>=2.2.4,<3.0.0)"]
-postgres = ["pgvector (>=0.2.5,<0.3.0)", "psycopg2 (>=2.9.9,<3.0.0)"]
-qdrant = ["fastembed (>=0.1.0,<0.2.0)", "qdrant-client (>=1.6.2,<2.0.0)"]
-weaviate = ["weaviate-client (>=4.5.4,<5.0.0)"]
-
-[package.source]
-type = "git"
-url = "https://github.com/stanfordnlp/dspy.git"
-reference = "HEAD"
-resolved_reference = "696f2d2e1f96f173abb36302c71a725d564dfadb"
-
-[[package]]
 name = "dspy-ai"
 version = "2.4.5"
 description = "DSPy"
@@ -2641,6 +2601,22 @@ llama-index-llms-openai = ">=0.1.5,<0.2.0"
 openai = ">=1.14.0"
 
 [[package]]
+name = "llama-index-callbacks-arize-phoenix"
+version = "0.1.4"
+description = "llama-index callbacks arize-phoenix integration"
+optional = false
+python-versions = ">=3.8.1,<3.12"
+files = [
+    {file = "llama_index_callbacks_arize_phoenix-0.1.4-py3-none-any.whl", hash = "sha256:817b984d67842d374cfd3592ce160da4855a214cb5630ec6dfd6701b3a5b9cca"},
+    {file = "llama_index_callbacks_arize_phoenix-0.1.4.tar.gz", hash = "sha256:56589b8e735ad6ea7972b15305d73c6c709a32835a9eb0f44dec773cd6ac5201"},
+]
+
+[package.dependencies]
+arize-phoenix = ">=3.0.3"
+llama-index-core = ">=0.10.11.post1,<0.11.0"
+openinference-instrumentation-llama-index = ">=1.0.0"
+
+[[package]]
 name = "llama-index-cli"
 version = "0.1.11"
 description = "llama-index cli"
@@ -2781,6 +2757,20 @@ files = [
 
 [package.dependencies]
 anthropic = ">=0.23.1,<0.24.0"
+llama-index-core = ">=0.10.1,<0.11.0"
+
+[[package]]
+name = "llama-index-llms-ollama"
+version = "0.1.2"
+description = "llama-index llms ollama integration"
+optional = false
+python-versions = ">=3.8.1,<4.0"
+files = [
+    {file = "llama_index_llms_ollama-0.1.2-py3-none-any.whl", hash = "sha256:967d816e13a6e064f8454b2faf7b70c749a52230258cac67b6025e20db6e988c"},
+    {file = "llama_index_llms_ollama-0.1.2.tar.gz", hash = "sha256:19ec727d048c873915d5b037d9a2fe956520c019b11d7ab8c3c406dd11f34e4b"},
+]
+
+[package.dependencies]
 llama-index-core = ">=0.10.1,<0.11.0"
 
 [[package]]
@@ -5938,23 +5928,6 @@ files = [
 ]
 
 [[package]]
-name = "structlog"
-version = "24.1.0"
-description = "Structured Logging for Python"
-optional = false
-python-versions = ">=3.8"
-files = [
-    {file = "structlog-24.1.0-py3-none-any.whl", hash = "sha256:3f6efe7d25fab6e86f277713c218044669906537bb717c1807a09d46bca0714d"},
-    {file = "structlog-24.1.0.tar.gz", hash = "sha256:41a09886e4d55df25bdcb9b5c9674bccfab723ff43e0a86a1b7b236be8e57b16"},
-]
-
-[package.extras]
-dev = ["structlog[tests,typing]"]
-docs = ["furo", "myst-parser", "sphinx", "sphinx-notfound-page", "sphinxcontrib-mermaid", "sphinxext-opengraph", "twisted"]
-tests = ["freezegun (>=0.2.8)", "pretend", "pytest (>=6.0)", "pytest-asyncio (>=0.17)", "simplejson"]
-typing = ["mypy (>=1.4)", "rich", "twisted"]
-
-[[package]]
 name = "sympy"
 version = "1.12"
 description = "Computer algebra system (CAS) in Python"
@@ -7326,4 +7299,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "7654a313750ddc98e3598624a42d3c624b54c69a32cae059d204646be17f9b00"
+content-hash = "f0ce91a9cb4eaed3649ab7e99f6c17a9f5b2716c0364803bc7434f6f461080de"

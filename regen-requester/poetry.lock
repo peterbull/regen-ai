@@ -2641,6 +2641,22 @@ llama-index-llms-openai = ">=0.1.5,<0.2.0"
 openai = ">=1.14.0"
 
 [[package]]
+name = "llama-index-callbacks-arize-phoenix"
+version = "0.1.4"
+description = "llama-index callbacks arize-phoenix integration"
+optional = false
+python-versions = ">=3.8.1,<3.12"
+files = [
+    {file = "llama_index_callbacks_arize_phoenix-0.1.4-py3-none-any.whl", hash = "sha256:817b984d67842d374cfd3592ce160da4855a214cb5630ec6dfd6701b3a5b9cca"},
+    {file = "llama_index_callbacks_arize_phoenix-0.1.4.tar.gz", hash = "sha256:56589b8e735ad6ea7972b15305d73c6c709a32835a9eb0f44dec773cd6ac5201"},
+]
+
+[package.dependencies]
+arize-phoenix = ">=3.0.3"
+llama-index-core = ">=0.10.11.post1,<0.11.0"
+openinference-instrumentation-llama-index = ">=1.0.0"
+
+[[package]]
 name = "llama-index-cli"
 version = "0.1.11"
 description = "llama-index cli"
@@ -7284,4 +7300,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "ad9c954c9fbb14daee16a6c947a5ec72d9cfafdb39a1932119d3e826877c89e2"
+content-hash = "d9f362e2274bf74cc1e5181b9dcd3c6ff6b2b4d17b7590c46897526c72ea224a"
